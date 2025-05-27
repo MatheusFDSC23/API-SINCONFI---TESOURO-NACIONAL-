@@ -9,7 +9,7 @@
 
 
 
-##################################################### 
+ 
 # Carregar pacotes
 if (!requireNamespace("pacman", quietly = TRUE)) install.packages("pacman")
 pacman::p_load(
@@ -19,16 +19,15 @@ pacman::p_load(
   RColorBrewer, writexl, reshape2, geobr, fuzzyjoin,
   rjson, jsonlite, httr, purrr, DT, xlsx, plotly, rJava, DT
 )
-##################################################### 
-# tirar formatação científica
-##################################################### 
+ 
+# tirar formatação científica 
 options(scipen = 999)
 
 
 
 
 
-##################################
+
 json2df = function(a){ 
   
   f_api <-   GET(a)
@@ -37,26 +36,23 @@ json2df = function(a){
   Sys.sleep(1)
   f_df <-as.data.frame(f_json[[1]]) 
 }
-##################################
 
 
 
-##################################
+
+
 # função para juntar data frames
 bind_json2df = function(a){ map(a,json2df)}
 # funcao para gerar df com os dados dos relatórios
 relatorios = function(a){map_dfr(bind_json2df(a), bind_rows)}
-##################################
+
 
 
 # SABENDO QUAIS ENTES ESTÃO DISPONIVEIS 
-
-
-##################################
 # acessar url com dados dos entes
 df_entes <- json2df("http://apidatalake.tesouro.gov.br/ords/siconfi/tt/entes")
 datatable(df_entes)
-##################################
+
 
 
 
@@ -64,7 +60,7 @@ datatable(df_entes)
 # SABENDO QUAIS ANEXOS E RELATÓRIOS ESTÃO DISPONIVEIS 
 
 
-################################################################################
+
 # Definir a URL base da API
 base_url <- "https://apidatalake.tesouro.gov.br/ords/siconfi/tt/anexos-relatorios"
 
@@ -89,7 +85,7 @@ items_data <- json_data$items
 
 # Converter em um data frame
 df_anexos <- as.data.frame(items_data)
-################################################################################
+
 
 
 #                       RREO: Relatório Resumido da Execução Orçamentária
@@ -156,7 +152,7 @@ for (bimestre in 1:6) {
 }
 
 
-################################################################################
+
 
 
 #                       RGF: Relatório de Gestão Fiscal
@@ -230,7 +226,7 @@ for (nr_periodo in 1:3) {
 }
 
 
-################################################################################
+
 
 
 #                       Contas Anuais 
