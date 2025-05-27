@@ -20,16 +20,10 @@ pacman::p_load(
   rjson, jsonlite, httr, purrr, DT, xlsx, plotly, rJava, DT
 )
  
-# tirar formatação científica 
 options(scipen = 999)
 
 
-
-
-
-
 json2df = function(a){ 
-  
   f_api <-   GET(a)
   f_txt <- content(f_api, as="text", encoding="UTF-8")
   f_json <- fromJSON(f_txt, flatten = FALSE)
@@ -41,23 +35,16 @@ json2df = function(a){
 
 
 
-# função para juntar data frames
+# Função para juntar data frames
 bind_json2df = function(a){ map(a,json2df)}
-# funcao para gerar df com os dados dos relatórios
+# Funcao para gerar df com os dados dos relatórios
 relatorios = function(a){map_dfr(bind_json2df(a), bind_rows)}
 
 
 
-# SABENDO QUAIS ENTES ESTÃO DISPONIVEIS 
-# acessar url com dados dos entes
+# Acessar url com dados dos entes disponiveis 
 df_entes <- json2df("http://apidatalake.tesouro.gov.br/ords/siconfi/tt/entes")
 datatable(df_entes)
-
-
-
-
-
-# SABENDO QUAIS ANEXOS E RELATÓRIOS ESTÃO DISPONIVEIS 
 
 
 
@@ -163,12 +150,12 @@ for (bimestre in 1:6) {
 base_url_rgf <- "https://apidatalake.tesouro.gov.br/ords/siconfi/tt/rgf"
 
 # Definir os parâmetros da consulta
-an_exercicio <- 2024          # Exercício do relatório
-in_periodicidade <- "Q"       # Periodicidade (Q para quadrimestral, S para semestral)
+an_exercicio <- 2024           # Exercício do relatório
+in_periodicidade <- "Q"        # Periodicidade (Q para quadrimestral, S para semestral)
 co_tipo_demonstrativo <- "RGF" # Tipo do Demonstrativo
-co_esfera <- "M"              # Filtro de esfera (M = Municípios)
-co_poder <- "E"               # Código do poder (E = Executivo)
-id_ente <- 3304557            # Código IBGE do ente
+co_esfera <- "M"               # Filtro de esfera (M = Municípios)
+co_poder <- "E"                # Código do poder (E = Executivo)
+id_ente <- 3304557             # Código IBGE do ente
 
 # Loop para quadrimestre (1, 2, 3)
 for (nr_periodo in 1:3) {
